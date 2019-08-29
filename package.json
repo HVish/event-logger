@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "web",
+    "api"
+  ],
+  "scripts": {
+    "api": "yarn workspace event-logger-api",
+    "web": "yarn workspace event-logger-web"
+  }
+}
