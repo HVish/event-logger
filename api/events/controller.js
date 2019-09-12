@@ -21,9 +21,9 @@ router
       await event.save();
       res.json(event);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(err.errors ? 400 : 500).json({
-        message: err.message
+        message: err instanceof Error ? err.toString() : JSON.stringify(err)
       });
     }
   });

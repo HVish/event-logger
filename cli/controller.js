@@ -30,7 +30,7 @@ function logEvent(details) {
 
   const requestHandler = (err, response, body) => {
     if (err) {
-      spinner.fail(err.message || "Unable to log this event");
+      spinner.fail(err instanceof Error ? err.toString() : JSON.stringify(err));
       return;
     }
     if (response.statusCode >= 200 && response.statusCode < 300) {
