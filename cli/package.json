@@ -1,0 +1,19 @@
+{
+  "name": "event-logger-cli",
+  "version": "1.0.0",
+  "description": "command-line interface for event-logger",
+  "main": "index.js",
+  "preferGlobal": true,
+  "bin": "./index.js",
+  "author": "Vishnu Singh <vishnusingh1729@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^3.0.1",
+    "inquirer": "^7.0.0",
+    "ora": "^3.4.0",
+    "request": "^2.88.0"
+  },
+  "scripts": {
+    "start": "node index.js log"
+  }
+}

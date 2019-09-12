@@ -2,10 +2,12 @@
   "private": true,
   "workspaces": [
     "web",
-    "api"
+    "api",
+    "cli"
   ],
   "scripts": {
     "api": "yarn workspace event-logger-api",
-    "web": "yarn workspace event-logger-web"
+    "web": "yarn workspace event-logger-web",
+    "cli": "yarn workspace event-logger-cli"
   }
 }

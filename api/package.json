@@ -15,7 +15,7 @@
     "mongoose": "^5.6.11"
   },
   "scripts": {
-    "dev": "nodemon --inspect ./index",
+    "dev": "NODE_ENV=development nodemon --inspect ./index",
     "start": "node ./index"
   },
   "devDependencies": {
