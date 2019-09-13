@@ -11,7 +11,15 @@ const questions = [
   {
     type: "input",
     name: "details",
-    message: "Enter log message:"
+    message: "Enter log message:",
+    validate: details => {
+      return !!details || "This field is required!";
+    }
+  },
+  {
+    type: "input",
+    name: "tags",
+    message: "Enter comma separated tags (optional):"
   }
 ];
 
@@ -21,7 +29,14 @@ program
   .action(async () => {
     try {
       const answers = await prompt(questions);
-      await logEvent(answers.details);
+
+      // convert tags to array
+      answers.tags = answers.tags
+        .replace(/,(\s)*/g, ",")
+        .split(",")
+        .filter(Boolean);
+
+      await logEvent(answers);
     } catch (err) {
       console.log(err);
     }

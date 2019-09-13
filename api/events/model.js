@@ -3,10 +3,8 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema(
   {
-    details: {
-      type: String,
-      required: true
-    }
+    details: { type: String, required: true },
+    tags: [String]
   },
   {
     timestamps: true
