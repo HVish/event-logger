@@ -1,5 +1,7 @@
-const request = require("request");
-const ora = require("ora");
+const chalk = require("chalk");
+
+const { formatDate } = require("./utils");
+const dataFetcher = require("./data-fetcher");
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 
@@ -7,47 +9,31 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
  * send details to event-logger server
  * @param {string} details details of the event
  */
-function logEvent(details) {
-  let chunkSize = 0;
-  let receivedChunk = 0;
-
-  const requestConfig = {
+async function logEvent(details) {
+  await dataFetcher({
     uri: `${BASE_URL}/events`,
     method: "POST",
     json: { details }
-  };
+  });
+}
 
-  const spinner = ora("Requesting server...").start();
-
-  /**
-   * Update the progress
-   * @param {number} delta difference to increase the chunk received
-   */
-  const updateProgress = delta => {
-    receivedChunk += delta;
-    spinner.text = `Progress: ${receivedChunk}/${chunkSize}`;
-  };
-
-  const requestHandler = (err, response, body) => {
-    if (err) {
-      spinner.fail(err instanceof Error ? err.toString() : JSON.stringify(err));
-      return;
-    }
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      spinner.succeed("Done.");
-      return;
-    }
-    spinner.warn(body.message || JSON.stringify(body));
-  };
-
-  const progressHandler = res => {
-    chunkSize = parseInt(res.headers["content-length"], 10);
-    res.on("data", chunk => updateProgress(chunk.length));
-  };
-
-  request(requestConfig, requestHandler).on("response", progressHandler);
+/**
+ * get all logged events from server
+ */
+async function getAllEvents() {
+  const { body } = await dataFetcher({
+    uri: `${BASE_URL}/events`,
+    method: "GET",
+    json: true
+  });
+  body.forEach(event => {
+    const date = chalk.blue(formatDate(event.createdAt));
+    const details = chalk.gray(event.details);
+    console.log(`${date}: ${details}`);
+  });
 }
 
 module.exports = {
-  logEvent
+  logEvent,
+  getAllEvents
 };

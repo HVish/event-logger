@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development nodemon --inspect ./index",
-    "start": "node ./index"
+    "start": "NODE_ENV=production node ./index"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

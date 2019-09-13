@@ -8,6 +8,7 @@
   "author": "Vishnu Singh <vishnusingh1729@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.2",
     "commander": "^3.0.1",
     "inquirer": "^7.0.0",
     "ora": "^3.4.0",

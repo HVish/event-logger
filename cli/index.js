@@ -3,7 +3,7 @@
 const program = require("commander");
 const { prompt } = require("inquirer");
 
-const { logEvent } = require("./controller");
+const { logEvent, getAllEvents } = require("./controller");
 
 program.version("1.0.0").description("Event logging system");
 
@@ -21,7 +21,19 @@ program
   .action(async () => {
     try {
       const answers = await prompt(questions);
-      logEvent(answers.details);
+      await logEvent(answers.details);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+// TODO: add support for pagination, last N events, select and edit
+program
+  .command("list")
+  .description("List all logged events")
+  .action(async () => {
+    try {
+      await getAllEvents();
     } catch (err) {
       console.log(err);
     }
